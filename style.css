@@ -6,8 +6,8 @@
 
 html, body {
   width: 100%;
-  max-width: 100%;
-  overflow-x: hidden;
+  height: 100%;
+  overflow: hidden; /* Жестко убираем любую прокрутку на странице */
   background-color: #000000;
   color: #ffffff;
   font-family: system-ui, -apple-system, sans-serif;
@@ -40,8 +40,8 @@ img {
 }
 
 #intro-logo {
-  width: 360px;
-  max-width: 80vw;
+  width: 320px;
+  max-width: 75vw;
   height: auto;
   user-select: none;
   transition: transform 0.3s ease;
@@ -57,12 +57,12 @@ img {
   pointer-events: none;
 }
 
-/* 2. Шапка сайта без полоски */
+/* 2. Шапка сайта */
 header {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 20px 25px;
+  padding: 15px 20px;
   background: transparent;
   position: fixed;
   top: 0;
@@ -77,7 +77,7 @@ header {
 }
 
 .header-logo img {
-  height: 35px;
+  height: 30px;
 }
 
 .hamburger {
@@ -86,13 +86,13 @@ header {
   cursor: pointer;
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  gap: 5px;
   padding: 5px;
 }
 
 .hamburger span {
   display: block;
-  width: 28px;
+  width: 26px;
   height: 3px;
   background-color: #ffffff;
   transition: background-color 0.2s;
@@ -116,7 +116,7 @@ header {
   transition: left 0.3s ease;
   display: flex;
   flex-direction: column;
-  padding-top: 40px;
+  padding-top: 30px;
 }
 
 .sidebar.open {
@@ -135,11 +135,11 @@ header {
 }
 
 .sidebar-logo {
-  padding: 0 25px 30px;
+  padding: 0 25px 20px;
 }
 
 .sidebar-logo img {
-  height: 40px;
+  height: 35px;
 }
 
 .sidebar-nav {
@@ -151,8 +151,8 @@ header {
   color: #ffffff;
   text-decoration: none;
   font-weight: 900;
-  font-size: 1.2rem;
-  padding: 16px 25px;
+  font-size: 1.1rem;
+  padding: 14px 25px;
   letter-spacing: 1px;
   transition: background 0.1s ease, color 0.1s ease;
   display: block;
@@ -184,21 +184,23 @@ header {
   visibility: visible;
 }
 
-/* 4. Выравнивание контента по центру */
+/* 4. Контент ровно по высоте экрана (без скролла) */
 main {
-  min-height: 100vh;
+  width: 100%;
+  height: 100vh;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 80px 20px 40px;
+  padding: 60px 15px 20px;
 }
 
 .main-section {
   width: 100%;
-  max-width: 800px;
+  max-width: 750px;
   display: none;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
 }
 
 .main-section.active {
@@ -206,33 +208,34 @@ main {
 }
 
 .main-logo-wrapper {
-  margin-bottom: 35px;
+  margin-bottom: 25px;
   text-align: center;
 }
 
+/* Компактный размер большого логотипа, чтобы влезать на маленькие экраны */
 .main-big-logo {
-  width: 320px;
-  max-width: 75vw;
+  width: 240px;
+  max-width: 65vw;
   height: auto;
   margin: 0 auto;
 }
 
 .grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 15px;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
   width: 100%;
 }
 
 .grid.single-card {
   grid-template-columns: 1fr;
-  max-width: 400px;
+  max-width: 380px;
 }
 
 .card {
   background: #0a0a0a;
   border: 1px solid #1a1a1a;
-  padding: 24px 15px;
+  padding: 18px 10px;
   text-decoration: none;
   color: #ffffff;
   display: flex;
@@ -244,14 +247,14 @@ main {
 }
 
 .card h3 {
-  font-size: 1.2rem;
+  font-size: 1.05rem;
   font-weight: 900;
-  letter-spacing: 1px;
+  letter-spacing: 0.5px;
 }
 
 .email-text {
-  margin-top: 8px;
-  font-size: 1rem;
+  margin-top: 6px;
+  font-size: 0.95rem;
   font-weight: 600;
   color: #1eff00;
   word-break: break-all;
@@ -269,9 +272,20 @@ main {
   color: #000000;
 }
 
-/* Адаптировано под маленькие экраны */
+/* Мобильная адаптация под узкие экраны: карточки в столбик, но всё равно без скролла */
 @media (max-width: 600px) {
   .grid {
     grid-template-columns: 1fr;
+    max-width: 320px;
+    gap: 10px;
+  }
+  
+  .card {
+    padding: 14px 10px;
+  }
+  
+  .main-big-logo {
+    width: 180px;
+    margin-bottom: 20px;
   }
 }
