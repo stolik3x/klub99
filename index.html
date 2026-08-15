@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>klub99</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Интро-экран -->
+  <div id="intro-screen">
+    <img src="klub99.jpg" alt="klub99 logo" id="intro-logo">
+  </div>
+
+  <!-- Боковое меню -->
+  <aside id="sidebar" class="sidebar">
+    <button id="close-sidebar-btn" class="close-btn">&times;</button>
+    <div class="sidebar-logo">
+      <img src="klub99.jpg" alt="klub99 logo">
+    </div>
+    <nav class="sidebar-nav">
+      <a href="#socials" class="nav-item active" data-tab="socials">СОЦСЕТИ</a>
+
+      <a href="#contacts" class="nav-item" data-tab="contacts">КОНТАКТЫ</a>
+    </nav>
+  </aside>
+  <div id="overlay" class="overlay"></div>
+
+  <!-- Основная шапка -->
+  <header>
+    <button id="menu-btn" class="hamburger">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+  </header>
+
+  <!-- Основной контент -->
+  <main>
+    <!-- Вкладка: Соцсети -->
+    <section id="socials" class="main-section tab-content active">
+      <div class="main-logo-wrapper">
+        <img src="klub99.jpg" alt="klub99 logo" class="main-big-logo">
+      </div>
+      <div class="grid">
+        <a href="https://youtube.com" target="_blank" class="card">
+          <h3>YOUTUBE</h3>
+        </a>
+        <a href="https://t.me" target="_blank" class="card">
+          <h3>TELEGRAM</h3>
+        </a>
+        <a href="https://soundcloud.com" target="_blank" class="card">
+          <h3>SOUNDCLOUD</h3>
+        </a>
+      </div>
+    </section>
+
+    <!-- Вкладка: Контакты -->
+    <section id="contacts" class="main-section tab-content">
+      <div class="main-logo-wrapper">
+        <img src="klub99.jpg" alt="klub99 logo" class="main-big-logo">
+      </div>
+      <div class="grid single-card">
+        <a href="mailto:klub99@gmail.com" class="card contact-card">
+          
+          <span class="email-text">klub99@gmail.com</span>
+        </a>
+      </div>
+    </section>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>

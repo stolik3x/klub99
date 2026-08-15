@@ -1,0 +1,258 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background-color: #000000;
+  color: #ffffff;
+  font-family: system-ui, -apple-system, sans-serif;
+  overflow-x: hidden;
+  min-height: 100vh;
+}
+
+/* 1. Интро-экран */
+#intro-screen {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: #000000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  transition: opacity 0.8s ease, visibility 0.8s ease;
+  cursor: pointer;
+}
+
+#intro-logo {
+  width: 500px;
+  max-width: 85vw;
+  height: auto;
+  user-select: none;
+  transition: transform 0.3s ease;
+}
+
+#intro-logo:hover {
+  transform: scale(1.03);
+}
+
+#intro-screen.fade-out {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+/* 2. Шапка сайта без полоски */
+header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 25px 30px;
+  background: transparent;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  pointer-events: none;
+}
+
+.header-logo, .hamburger {
+  pointer-events: auto;
+}
+
+.header-logo img {
+  height: 40px;
+  display: block;
+}
+
+.hamburger {
+  background: none;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 5px;
+}
+
+.hamburger span {
+  display: block;
+  width: 28px;
+  height: 3px;
+  background-color: #ffffff;
+  transition: background-color 0.2s;
+}
+
+.hamburger:hover span {
+  background-color: #1eff00;
+}
+
+/* 3. Боковое меню (Sidebar) */
+.sidebar {
+  position: fixed;
+  top: 0;
+  left: -300px;
+  width: 280px;
+  height: 100vh;
+  background-color: #000000;
+  border-right: 1px solid #1a1a1a;
+  z-index: 500;
+  transition: left 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  padding-top: 40px;
+}
+
+.sidebar.open {
+  left: 0;
+}
+
+.close-btn {
+  position: absolute;
+  top: 15px;
+  right: 20px;
+  background: none;
+  border: none;
+  color: #ffffff;
+  font-size: 2rem;
+  cursor: pointer;
+}
+
+.sidebar-logo {
+  padding: 0 25px 30px;
+}
+
+.sidebar-logo img {
+  height: 45px;
+}
+
+.sidebar-nav {
+  display: flex;
+  flex-direction: column;
+}
+
+.nav-item {
+  color: #ffffff;
+  text-decoration: none;
+  font-weight: 900;
+  font-size: 1.3rem;
+  padding: 16px 25px;
+  letter-spacing: 1px;
+  transition: background 0.1s ease, color 0.1s ease;
+  display: block;
+}
+
+.nav-item:hover,
+.nav-item.active {
+  background-color: #1eff00;
+  color: #000000;
+}
+
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.8);
+  z-index: 400;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+.overlay.active {
+  opacity: 1;
+  visibility: visible;
+}
+
+/* 4. Выравнивание контента по центру */
+main {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.main-section {
+  width: 100%;
+  max-width: 800px;
+  display: none;
+  flex-direction: column;
+  align-items: center;
+}
+
+.main-section.active {
+  display: flex;
+}
+
+.main-logo-wrapper {
+  margin-bottom: 40px;
+  text-align: center;
+}
+
+/* Логотип увеличен в 2 раза */
+.main-big-logo {
+  width: 360px;
+  max-width: 85vw;
+  height: auto;
+  display: block;
+  margin: 0 auto;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 15px;
+  width: 100%;
+}
+
+.grid.single-card {
+  grid-template-columns: 1fr;
+  max-width: 400px;
+}
+
+.card {
+  background: #0a0a0a;
+  border: 1px solid #1a1a1a;
+  padding: 28px 20px;
+  text-decoration: none;
+  color: #ffffff;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  transition: transform 0.2s, background 0.1s, color 0.1s, border-color 0.1s;
+}
+
+.card h3 {
+  font-size: 1.3rem;
+  font-weight: 900;
+  letter-spacing: 1px;
+}
+
+.email-text {
+  margin-top: 8px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #1eff00;
+  transition: color 0.1s;
+}
+
+.card:hover {
+  background: #1eff00;
+  color: #000000;
+  border-color: #1eff00;
+  transform: translateY(-2px);
+}
+
+.card:hover .email-text {
+  color: #000000;
+}
