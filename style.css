@@ -1,291 +1,181 @@
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
+* { box-sizing: border-box; margin: 0; padding: 0; }
 
 html, body {
-  width: 100%;
-  height: 100%;
-  overflow: hidden; /* Жестко убираем любую прокрутку на странице */
+  width: 100%; height: 100%;
+  overflow: hidden;
   background-color: #000000;
   color: #ffffff;
   font-family: system-ui, -apple-system, sans-serif;
   touch-action: manipulation;
+  position: relative;
 }
 
-img {
-  max-width: 100%;
-  height: auto;
-  display: block;
+/* 1. CRT-эффект на весь фон */
+body::before {
+  content: '';
+  position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+  background: linear-gradient(to bottom, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0) 50%, rgba(0, 0, 0, 0.4) 50%, rgba(0, 0, 0, 0.4));
+  background-size: 100% 4px;
+  pointer-events: none; z-index: 2;
 }
 
-/* 1. Интро-экран */
+body::after {
+  content: '';
+  position: fixed; top: -100%; left: 0; width: 100%; height: 100%;
+  background: linear-gradient(to bottom, transparent, rgba(30, 255, 0, 0.06), transparent);
+  animation: scanline 7s linear infinite;
+  pointer-events: none; z-index: 2;
+}
+
+@keyframes scanline { 0% { top: -100%; } 100% { top: 100%; } }
+
+img { max-width: 100%; height: auto; display: block; }
+
+/* 2. Интро-экран */
 #intro-screen {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  width: 100%;
-  height: 100%;
+  position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+  width: 100%; height: 100%;
   background-color: #000000;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  display: flex; justify-content: center; align-items: center;
   z-index: 1000;
   transition: opacity 0.8s ease, visibility 0.8s ease;
-  cursor: pointer;
-  padding: 20px;
+  cursor: pointer; padding: 20px;
+}
+
+.intro-container {
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  display: inline-block;
+}
+
+.intro-container:hover {
+  transform: scale(1.08);
+  filter: drop-shadow(0 0 25px rgba(30, 255, 0, 0.45));
+}
+
+.intro-container:active { transform: scale(0.96); }
+
+@keyframes sway { 
+  0% { transform: rotate(0deg); } 
+  25% { transform: rotate(-4deg); } 
+  75% { transform: rotate(4deg); } 
+  100% { transform: rotate(0deg); } 
+}
+
+.intro-logo-wrapper {
+  position: relative;
+  animation: sway 3s ease-in-out infinite;
 }
 
 #intro-logo {
-  width: 320px;
-  max-width: 75vw;
-  height: auto;
-  user-select: none;
-  transition: transform 0.3s ease;
+  width: 640px; max-width: 85vw; height: auto;
+  user-select: none; position: relative; z-index: 1;
 }
 
-#intro-logo:hover {
-  transform: scale(1.03);
-}
-
-#intro-screen.fade-out {
-  opacity: 0;
-  visibility: hidden;
+.intro-logo-wrapper::before, .intro-logo-wrapper::after {
+  content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+  background: url('klub99.png') no-repeat center / contain;
   pointer-events: none;
 }
 
-/* 2. Шапка сайта */
+.intro-logo-wrapper::before {
+  left: 3px; clip-path: inset(20% 0 30% 0);
+  animation: glitch-anim-1 2s infinite linear alternate-reverse; opacity: 0.8;
+}
+
+.intro-logo-wrapper::after {
+  left: -3px; clip-path: inset(50% 0 10% 0);
+  animation: glitch-anim-2 1.5s infinite linear alternate-reverse; opacity: 0.8;
+}
+
+@keyframes glitch-anim-1 { 
+    0% { clip-path: inset(10% 0 80% 0); transform: translate(-3px, 1px); }
+    100% { clip-path: inset(50% 0 30% 0); transform: translate(2px, -2px); }
+}
+
+@keyframes glitch-anim-2 { 
+    0% { clip-path: inset(65% 0 10% 0); transform: translate(3px, -1px); }
+    100% { clip-path: inset(80% 0 5% 0); transform: translate(-2px, 3px); }
+}
+
+#intro-screen.fade-out { opacity: 0; visibility: hidden; pointer-events: none; }
+
+/* 3. Шапка */
 header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 15px 20px;
-  background: transparent;
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  z-index: 100;
-  pointer-events: none;
+  display: flex; align-items: center; justify-content: flex-start;
+  padding: 20px 25px; position: fixed; top: 0; left: 0; right: 0;
+  z-index: 100; pointer-events: none;
 }
 
-.header-logo, .hamburger {
-  pointer-events: auto;
-}
+.hamburger { pointer-events: auto; background: none; border: none; cursor: pointer; display: flex; flex-direction: column; gap: 5px; padding: 5px; }
+.hamburger span { display: block; width: 26px; height: 3px; background-color: #ffffff; transition: background-color 0.2s; }
+.hamburger:hover span { background-color: #1eff00; }
 
-.header-logo img {
-  height: 30px;
-}
-
-.hamburger {
-  background: none;
-  border: none;
-  cursor: pointer;
-  display: flex;
-  flex-direction: column;
-  gap: 5px;
-  padding: 5px;
-}
-
-.hamburger span {
-  display: block;
-  width: 26px;
-  height: 3px;
-  background-color: #ffffff;
-  transition: background-color 0.2s;
-}
-
-.hamburger:hover span {
-  background-color: #1eff00;
-}
-
-/* 3. Боковое меню (Sidebar) */
+/* 4. Меню */
 .sidebar {
-  position: fixed;
-  top: 0;
-  left: -300px;
-  width: 280px;
-  max-width: 80vw;
-  height: 100%;
-  background-color: #000000;
-  border-right: 1px solid #1a1a1a;
-  z-index: 500;
-  transition: left 0.3s ease;
-  display: flex;
-  flex-direction: column;
-  padding-top: 30px;
+  position: fixed; top: 0; left: -300px;
+  width: 280px; max-width: 80vw; height: 100%;
+  background-color: #000000; border-right: 1px solid #1a1a1a;
+  z-index: 500; transition: left 0.3s ease;
+  display: flex; flex-direction: column; padding-top: 30px;
 }
 
-.sidebar.open {
-  left: 0;
-}
-
-.close-btn {
-  position: absolute;
-  top: 15px;
-  right: 20px;
-  background: none;
-  border: none;
-  color: #ffffff;
-  font-size: 2rem;
-  cursor: pointer;
-}
-
-.sidebar-logo {
-  padding: 0 25px 20px;
-}
-
-.sidebar-logo img {
-  height: 35px;
-}
-
-.sidebar-nav {
-  display: flex;
-  flex-direction: column;
-}
-
-.nav-item {
-  color: #ffffff;
-  text-decoration: none;
-  font-weight: 900;
-  font-size: 1.1rem;
-  padding: 14px 25px;
-  letter-spacing: 1px;
-  transition: background 0.1s ease, color 0.1s ease;
-  display: block;
-}
-
-.nav-item:hover,
-.nav-item.active {
-  background-color: #1eff00;
-  color: #000000;
-}
+.sidebar.open { left: 0; }
+.close-btn { position: absolute; top: 15px; right: 20px; background: none; border: none; color: #ffffff; font-size: 2rem; cursor: pointer; }
+.sidebar-nav { display: flex; flex-direction: column; margin-top: 50px; }
+.nav-item { color: #ffffff; text-decoration: none; font-weight: 900; font-size: 1.1rem; padding: 14px 25px; transition: background 0.1s ease, color 0.1s ease; display: block; cursor: pointer; }
+.nav-item:hover, .nav-item.active { background-color: #1eff00; color: #000000; }
 
 .overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.8);
-  z-index: 400;
-  opacity: 0;
-  visibility: hidden;
-  transition: opacity 0.3s ease, visibility 0.3s ease;
+  position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0, 0, 0, 0.8); z-index: 400; opacity: 0; visibility: hidden; transition: opacity 0.3s ease;
 }
+.overlay.active { opacity: 1; visibility: visible; }
 
-.overlay.active {
-  opacity: 1;
-  visibility: visible;
-}
-
-/* 4. Контент ровно по высоте экрана (без скролла) */
-main {
-  width: 100%;
-  height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 60px 15px 20px;
-}
+/* 5. Контент */
+main { width: 100%; height: 100vh; display: flex; align-items: center; justify-content: center; padding: 0 20px; position: relative; z-index: 3; }
 
 .main-section {
-  width: 100%;
-  max-width: 750px;
   display: none;
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  width: 100%;
 }
 
 .main-section.active {
   display: flex;
 }
 
+/* Обёртка с перспективой, чтобы логотип мог вращаться в 3D пространстве */
 .main-logo-wrapper {
   margin-bottom: 25px;
   text-align: center;
+  perspective: 1000px; 
 }
 
-/* Компактный размер большого логотипа, чтобы влезать на маленькие экраны */
-.main-big-logo {
-  width: 240px;
-  max-width: 65vw;
-  height: auto;
-  margin: 0 auto;
+.main-big-logo { 
+  width: 480px; 
+  max-width: 80vw; 
+  user-select: none;
+  cursor: pointer;
+  transform-style: preserve-3d;
+  transition: transform 0.1s ease-out;
+  will-change: transform;
 }
 
-.grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 12px;
-  width: 100%;
-}
+.grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; width: 100%; max-width: 750px; }
+.card { background: transparent; border: none; padding: 15px; text-decoration: none; color: #ffffff; text-align: center; transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), color 0.25s ease, text-shadow 0.25s ease; }
+.card h3 { font-size: 1.1rem; font-weight: 900; letter-spacing: 1.5px; }
+.card:hover { transform: translateY(-5px); }
+.card.youtube:hover { color: #FF0000; text-shadow: 0 0 15px rgba(255, 0, 0, 0.6); }
+.card.telegram:hover { color: #229ED9; text-shadow: 0 0 15px rgba(34, 158, 217, 0.6); }
+.card.soundcloud:hover { color: #FF5500; text-shadow: 0 0 15px rgba(255, 85, 0, 0.6); }
 
-.grid.single-card {
-  grid-template-columns: 1fr;
-  max-width: 380px;
-}
+.contact-text-block { text-align: center; }
+.contact-title { font-size: 1.1rem; font-weight: 900; letter-spacing: 1px; margin-bottom: 6px; }
+.contact-email { font-size: 1.2rem; font-weight: 700; color: #1eff00; user-select: all; }
 
-.card {
-  background: #0a0a0a;
-  border: 1px solid #1a1a1a;
-  padding: 18px 10px;
-  text-decoration: none;
-  color: #ffffff;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-  transition: transform 0.2s, background 0.1s, color 0.1s, border-color 0.1s;
-}
-
-.card h3 {
-  font-size: 1.05rem;
-  font-weight: 900;
-  letter-spacing: 0.5px;
-}
-
-.email-text {
-  margin-top: 6px;
-  font-size: 0.95rem;
-  font-weight: 600;
-  color: #1eff00;
-  word-break: break-all;
-  transition: color 0.1s;
-}
-
-.card:hover {
-  background: #1eff00;
-  color: #000000;
-  border-color: #1eff00;
-  transform: translateY(-2px);
-}
-
-.card:hover .email-text {
-  color: #000000;
-}
-
-/* Мобильная адаптация под узкие экраны: карточки в столбик, но всё равно без скролла */
 @media (max-width: 600px) {
-  .grid {
-    grid-template-columns: 1fr;
-    max-width: 320px;
-    gap: 10px;
-  }
-  
-  .card {
-    padding: 14px 10px;
-  }
-  
-  .main-big-logo {
-    width: 180px;
-    margin-bottom: 20px;
-  }
+  .grid { grid-template-columns: 1fr; gap: 15px; }
+  .main-big-logo { width: 320px; }
 }
