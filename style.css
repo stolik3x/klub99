@@ -29,77 +29,7 @@ body::after {
 
 @keyframes scanline { 0% { top: -100%; } 100% { top: 100%; } }
 
-img { max-width: 100%; height: auto; display: block; }
-
-/* 2. Интро-экран */
-#intro-screen {
-  position: fixed; top: 0; left: 0; right: 0; bottom: 0;
-  width: 100%; height: 100%;
-  background-color: #000000;
-  display: flex; justify-content: center; align-items: center;
-  z-index: 1000;
-  transition: opacity 0.8s ease, visibility 0.8s ease;
-  cursor: pointer; padding: 20px;
-}
-
-.intro-container {
-  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
-  display: inline-block;
-}
-
-.intro-container:hover {
-  transform: scale(1.08);
-  filter: drop-shadow(0 0 25px rgba(30, 255, 0, 0.45));
-}
-
-.intro-container:active { transform: scale(0.96); }
-
-@keyframes sway { 
-  0% { transform: rotate(0deg); } 
-  25% { transform: rotate(-4deg); } 
-  75% { transform: rotate(4deg); } 
-  100% { transform: rotate(0deg); } 
-}
-
-.intro-logo-wrapper {
-  position: relative;
-  animation: sway 3s ease-in-out infinite;
-}
-
-#intro-logo {
-  width: 640px; max-width: 85vw; height: auto;
-  user-select: none; position: relative; z-index: 1;
-}
-
-.intro-logo-wrapper::before, .intro-logo-wrapper::after {
-  content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-  background: url('klub99.png') no-repeat center / contain;
-  pointer-events: none;
-}
-
-.intro-logo-wrapper::before {
-  left: 3px; clip-path: inset(20% 0 30% 0);
-  animation: glitch-anim-1 2s infinite linear alternate-reverse; opacity: 0.8;
-}
-
-.intro-logo-wrapper::after {
-  left: -3px; clip-path: inset(50% 0 10% 0);
-  animation: glitch-anim-2 1.5s infinite linear alternate-reverse; opacity: 0.8;
-}
-
-@keyframes glitch-anim-1 { 
-    0% { clip-path: inset(10% 0 80% 0); transform: translate(-3px, 1px); }
-    100% { clip-path: inset(50% 0 30% 0); transform: translate(2px, -2px); }
-}
-
-@keyframes glitch-anim-2 { 
-    0% { clip-path: inset(65% 0 10% 0); transform: translate(3px, -1px); }
-    100% { clip-path: inset(80% 0 5% 0); transform: translate(-2px, 3px); }
-}
-
-#intro-screen.fade-out { opacity: 0; visibility: hidden; pointer-events: none; }
-
-/* 3. Шапка */
+/* 2. Шапка */
 header {
   display: flex; align-items: center; justify-content: flex-start;
   padding: 20px 25px; position: fixed; top: 0; left: 0; right: 0;
@@ -110,7 +40,7 @@ header {
 .hamburger span { display: block; width: 26px; height: 3px; background-color: #ffffff; transition: background-color 0.2s; }
 .hamburger:hover span { background-color: #1eff00; }
 
-/* 4. Меню */
+/* 3. Меню */
 .sidebar {
   position: fixed; top: 0; left: -300px;
   width: 280px; max-width: 80vw; height: 100%;
@@ -131,7 +61,7 @@ header {
 }
 .overlay.active { opacity: 1; visibility: visible; }
 
-/* 5. Контент */
+/* 4. Контент */
 main { width: 100%; height: 100vh; display: flex; align-items: center; justify-content: center; padding: 0 20px; position: relative; z-index: 3; }
 
 .main-section {
@@ -146,14 +76,16 @@ main { width: 100%; height: 100vh; display: flex; align-items: center; justify-c
   display: flex;
 }
 
-/* Обёртка с перспективой, чтобы логотип мог вращаться в 3D пространстве */
 .main-logo-wrapper {
   margin-bottom: 25px;
   text-align: center;
   perspective: 1000px; 
 }
 
-.main-big-logo { 
+/* Главный логотип с глитчем и 3D-проседанием */
+.main-big-logo {
+  position: relative;
+  display: inline-block;
   width: 480px; 
   max-width: 80vw; 
   user-select: none;
@@ -163,6 +95,43 @@ main { width: 100%; height: 100vh; display: flex; align-items: center; justify-c
   will-change: transform;
 }
 
+.main-big-logo img {
+  width: 100%;
+  height: auto;
+  display: block;
+  position: relative;
+  z-index: 1;
+}
+
+/* Эффекты цифровых помех */
+.main-big-logo::before, .main-big-logo::after {
+  content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+  background: url('klub99.png') no-repeat center / contain;
+  pointer-events: none;
+  z-index: 2;
+}
+
+.main-big-logo::before {
+  left: 3px; clip-path: inset(20% 0 30% 0);
+  animation: glitch-anim-1 2s infinite linear alternate-reverse; opacity: 0.8;
+}
+
+.main-big-logo::after {
+  left: -3px; clip-path: inset(50% 0 10% 0);
+  animation: glitch-anim-2 1.5s infinite linear alternate-reverse; opacity: 0.8;
+}
+
+@keyframes glitch-anim-1 { 
+    0% { clip-path: inset(10% 0 80% 0); transform: translate(-3px, 1px); }
+    100% { clip-path: inset(50% 0 30% 0); transform: translate(2px, -2px); }
+}
+
+@keyframes glitch-anim-2 { 
+    0% { clip-path: inset(65% 0 10% 0); transform: translate(3px, -1px); }
+    100% { clip-path: inset(80% 0 5% 0); transform: translate(-2px, 3px); }
+}
+
+/* Сетка карточек */
 .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; width: 100%; max-width: 750px; }
 .card { background: transparent; border: none; padding: 15px; text-decoration: none; color: #ffffff; text-align: center; transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), color 0.25s ease, text-shadow 0.25s ease; }
 .card h3 { font-size: 1.1rem; font-weight: 900; letter-spacing: 1.5px; }

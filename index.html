@@ -8,15 +8,6 @@
 </head>
 <body>
 
-    <!-- Интро-экран -->
-    <div id="intro-screen" onclick="closeIntro()">
-        <div class="intro-container">
-            <div class="intro-logo-wrapper">
-                <img src="klub99.png" alt="KLUB99" id="intro-logo">
-            </div>
-        </div>
-    </div>
-
     <!-- Шапка -->
     <header>
         <button class="hamburger" onclick="toggleSidebar()">
@@ -41,7 +32,9 @@
         <!-- Главная страница -->
         <section id="home-section" class="main-section active">
             <div class="main-logo-wrapper">
-                <img src="klub99.png" alt="KLUB99" class="main-big-logo">
+                <div class="main-big-logo">
+                    <img src="klub99.png" alt="KLUB99">
+                </div>
             </div>
             <div class="grid">
                 <a href="https://youtube.com" target="_blank" class="card youtube"><h3>YOUTUBE</h3></a>
@@ -53,18 +46,13 @@
         <!-- Страница контактов -->
         <section id="contacts-section" class="main-section">
             <div class="contact-text-block">
-                <p class="contact-title"></p>
+                <p class="contact-title">ПОЧТА ДЛЯ СВЯЗИ</p>
                 <p class="contact-email">klub99@gmail.com</p>
             </div>
         </section>
     </main>
 
     <script>
-        // Логика интро
-        function closeIntro() {
-            document.getElementById('intro-screen').classList.add('fade-out');
-        }
-
         // Логика меню
         function toggleSidebar() {
             const sidebar = document.getElementById('sidebar');
@@ -100,12 +88,11 @@
                     const maxRotate = 22;
                     const rotateX = y * maxRotate;
                     const rotateY = x * -maxRotate;
-                    // Вдавливание по оси Z и наклон относительно курсора
+                    
                     mainLogo.style.transform = `perspective(800px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateZ(-25px) scale(0.97)`;
                 });
 
                 mainLogo.addEventListener('mouseleave', () => {
-                    // Плавный возврат в исходное положение
                     mainLogo.style.transform = 'perspective(800px) rotateX(0deg) rotateY(0deg) translateZ(0px) scale(1)';
                 });
             }
